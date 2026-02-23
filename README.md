@@ -1,6 +1,6 @@
 # business-rules-extractor
 
-Cursor plugin to extract feature-level business rules from source code using an evidence-first, stateful, multi-agent workflow.
+Plugin for Cursor and Claude Code to extract feature-level business rules from source code using an evidence-first, stateful, multi-agent workflow.
 
 Designed for **broad features** (e.g. "Twilio Call Actions") that span multiple sub-features — each sub-feature gets its own focused document, extracted in a dedicated context window.
 
@@ -10,19 +10,29 @@ From this plugin folder:
 
 ```bash
 chmod +x scripts/install-local.sh scripts/uninstall-local.sh
+
+# Cursor (default)
 ./scripts/install-local.sh /absolute/path/to/target-repo
+
+# Claude Code
+./scripts/install-local.sh /absolute/path/to/target-repo claude-code
+
+# Custom output directory (optional 3rd arg, default: <target-repo>/docs/business-rules)
+./scripts/install-local.sh /absolute/path/to/target-repo cursor /absolute/path/to/output-root
+./scripts/install-local.sh /absolute/path/to/target-repo claude-code /absolute/path/to/output-root
 ```
 
 Then:
 
-1. Open target repo in Cursor.
-2. Reload window (`Developer: Reload Window`).
+1. Open target repo in Cursor (or Claude Code).
+2. Reload window (`Developer: Reload Window`) if using Cursor.
 3. Run `/extract-business-rule`.
 
 To remove:
 
 ```bash
 ./scripts/uninstall-local.sh /absolute/path/to/target-repo
+./scripts/uninstall-local.sh /absolute/path/to/target-repo claude-code
 ```
 
 ## How it works
@@ -43,12 +53,12 @@ Run N+1 → [STATUS FINAL ✅]
 
 1. **Target repository** — which repo to extract from.
 2. **Feature scope** — what feature to document (e.g. "Twilio Call Actions").
-3. **What to extract** (multi-select):
+3. **Plan review** — confirm or remove proposed documents before extraction begins.
+4. **What to extract** (multi-select, after plan review):
    - Business Rules — validation, conditions, state transitions
    - Technical Rules — API contracts, error handling, integration patterns
    - Usage Context — triggers, pre/post conditions, user workflows
    - Examples — concrete scenarios with payloads and state transitions
-4. **Plan review** — confirm or remove proposed documents before extraction begins.
 
 ### Status panel
 
@@ -71,9 +81,11 @@ Every run opens and closes with a status panel:
 
 | Artifact | Path |
 |---|---|
-| Documents | `<repo>/docs/business-rules/<feature-slug>/<doc>.md` |
-| State | `<repo>/docs/business-rules/extractions/<feature-slug>/state.json` |
-| Plan | `<repo>/docs/business-rules/extractions/<feature-slug>/PLAN.md` |
+| Documents | `<output-root>/<feature-slug>/<doc>.md` |
+| State | `<output-root>/extractions/<feature-slug>/state.json` |
+| Plan | `<output-root>/extractions/<feature-slug>/PLAN.md` |
+
+`<output-root>` defaults to `<target-repo>/docs/business-rules`. Override via the install script's 3rd argument.
 
 ## What it includes
 
