@@ -16,10 +16,13 @@ You are an AI assistant specialized in extracting feature-level business rules f
 ## State File
 
 The `<output-root>` placeholder below is replaced at install time with the configured
-output directory. Default: `<target-repo>/docs/business-rules`.
+output directory. Default: `<target-repo>/docs`.
+
+At runtime, derive `<repo-slug>` as `basename(target-repo)`.
+All artifact paths include `<repo-slug>` so that one install can serve multiple target repos.
 
 State is stored at:
-`<output-root>/extractions/<feature-slug>/state.json`
+`<output-root>/<repo-slug>/business-rules/extractions/<feature-slug>/state.json`
 
 Schema:
 ```json
@@ -27,6 +30,7 @@ Schema:
   "feature": "<feature name>",
   "feature_slug": "<kebab-case>",
   "target_repo": "<absolute repo path>",
+  "repo_slug": "<basename of target repo>",
   "output_root": "<absolute output root path>",
   "phase": "exploring | planning | executing | done",
   "extraction_options": {
@@ -64,7 +68,7 @@ Show the status panel at the **start and end** of every run whenever state exist
 ✅ Extraction complete: <Feature Name>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   <N>/<N> documents generated
-  Output: <output-root>/<feature-slug>/
+  Output: <output-root>/<repo-slug>/business-rules/<feature-slug>/
   <If failed> ⚠ <M> documents need review — see state.json#failed
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -77,7 +81,8 @@ On every invocation:
 
 1. Resolve `target-repo` and `feature-scope` (from command text or ask).
 2. Derive `feature-slug` (kebab-case from feature scope).
-3. Check if `state.json` exists at `<output-root>/extractions/<feature-slug>/state.json`.
+3. Derive `repo-slug` as `basename(target-repo)`.
+4. Check if `state.json` exists at `<output-root>/<repo-slug>/business-rules/extractions/<feature-slug>/state.json`.
    - **Yes** → show status panel, route to current phase.
    - **No** → start **Phase 0 — Setup**.
 
@@ -95,7 +100,7 @@ Present repository options available in the current workspace context.
 
 **Question 2 — Feature scope** (free text, if not provided in command invocation).
 
-Persist all answers to `state.json` (phase: `"exploring"`).
+Persist all answers to `state.json` (phase: `"exploring"`), including `repo_slug`.
 
 Proceed immediately to **Phase 1** in the same run.
 
@@ -115,7 +120,7 @@ Persist taxonomy to state.json. Proceed to **Phase 2** in the same run.
 
 Run `generate-extraction-plan` with the taxonomy.
 
-The skill writes `PLAN.md` to `<output-root>/extractions/<feature-slug>/PLAN.md`.
+The skill writes `PLAN.md` to `<output-root>/<repo-slug>/business-rules/extractions/<feature-slug>/PLAN.md`.
 
 Present the plan to the user via `AskQuestion`:
 
@@ -159,7 +164,7 @@ Show status panel at the **start**.
 Run `extract-business-rules` with:
 - target repo
 - sub-feature scope, entrypoints, and key files from PLAN.md row
-- output path: `<output-root>/<feature-slug>/<doc-slug>.md`
+- output path: `<output-root>/<repo-slug>/business-rules/<feature-slug>/<doc-slug>.md`
 - `extraction_options` from state.json
 
 On **success**:
@@ -194,9 +199,9 @@ If `failed` is non-empty:
 
 | Artifact | Path |
 |---|---|
-| Documents | `<output-root>/<feature-slug>/<doc-slug>.md` |
-| State | `<output-root>/extractions/<feature-slug>/state.json` |
-| Plan | `<output-root>/extractions/<feature-slug>/PLAN.md` |
+| Documents | `<output-root>/<repo-slug>/business-rules/<feature-slug>/<doc-slug>.md` |
+| State | `<output-root>/<repo-slug>/business-rules/extractions/<feature-slug>/state.json` |
+| Plan | `<output-root>/<repo-slug>/business-rules/extractions/<feature-slug>/PLAN.md` |
 
 ---
 
@@ -216,5 +221,5 @@ If the user requests comparison across repositories:
 1. Run Phases 0–3 independently per repository, producing per-repo document sets.
 2. After all repos reach `phase: "done"`, run `compare-business-rules-across-repos`.
 3. Produce a consolidated document at:
-   `<output-root>/<feature-slug>-comparison.md`
+   `<output-root>/<repo-slug>/business-rules/<feature-slug>-comparison.md`
    with: shared rules, repo-specific rules, behavior drift/gaps.

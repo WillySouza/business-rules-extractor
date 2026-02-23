@@ -6,7 +6,7 @@ PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 TARGET_REPO="${1:-}"
 PLATFORM="${2:-cursor}"
-OUTPUT_ROOT="${3:-${TARGET_REPO}/docs/business-rules}"
+OUTPUT_ROOT="${3:-${TARGET_REPO}/docs}"
 
 if [[ -z "${TARGET_REPO}" ]]; then
   echo "Usage: ./scripts/install-local.sh /absolute/path/to/target-repo [cursor|claude-code] [/output/root]"

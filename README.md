@@ -17,7 +17,7 @@ chmod +x scripts/install-local.sh scripts/uninstall-local.sh
 # Claude Code
 ./scripts/install-local.sh /absolute/path/to/target-repo claude-code
 
-# Custom output directory (optional 3rd arg, default: <target-repo>/docs/business-rules)
+# Custom output directory (optional 3rd arg, default: <target-repo>/docs)
 ./scripts/install-local.sh /absolute/path/to/target-repo cursor /absolute/path/to/output-root
 ./scripts/install-local.sh /absolute/path/to/target-repo claude-code /absolute/path/to/output-root
 ```
@@ -81,11 +81,12 @@ Every run opens and closes with a status panel:
 
 | Artifact | Path |
 |---|---|
-| Documents | `<output-root>/<feature-slug>/<doc>.md` |
-| State | `<output-root>/extractions/<feature-slug>/state.json` |
-| Plan | `<output-root>/extractions/<feature-slug>/PLAN.md` |
+| Documents | `<output-root>/<repo-slug>/business-rules/<feature-slug>/<doc>.md` |
+| State | `<output-root>/<repo-slug>/business-rules/extractions/<feature-slug>/state.json` |
+| Plan | `<output-root>/<repo-slug>/business-rules/extractions/<feature-slug>/PLAN.md` |
 
-`<output-root>` defaults to `<target-repo>/docs/business-rules`. Override via the install script's 3rd argument.
+`<output-root>` defaults to `<target-repo>/docs`. Override via the install script's 3rd argument.
+`<repo-slug>` is derived at runtime from `basename(target-repo)`.
 
 ## What it includes
 
