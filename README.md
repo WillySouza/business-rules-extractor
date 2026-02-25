@@ -6,39 +6,12 @@ Designed for **broad features** (e.g. "Twilio Call Actions") that span multiple 
 
 ## Install
 
-### Option A — Plugin (recommended)
-
-Register this repo as a Claude Code plugin. No install script needed.
-
-1. Clone this repo somewhere on your machine.
-2. Add the plugin path to your Claude Code settings (project or global):
-   ```json
-   {
-     "plugins": ["/absolute/path/to/ricochet-dev-hub"]
-   }
-   ```
-3. The `.claude-plugin/plugin.json` declares all components (commands, skills, agents, templates).
-4. Run `/extract-business-rule` in any project.
-
-### Option B — Install script (copies files into target repo)
-
-```bash
-chmod +x scripts/install-local.sh scripts/uninstall-local.sh
-
-# Default output directory (<target-repo>/docs)
-./scripts/install-local.sh /absolute/path/to/target-repo
-
-# Custom output directory
-./scripts/install-local.sh /absolute/path/to/target-repo /absolute/path/to/output-root
+```
+/plugin marketplace add WillySouza/business-rules-extractor
+/plugin install business-rules-extractor@business-rules
 ```
 
-Then run `/extract-business-rule` in Claude Code.
-
-To remove:
-
-```bash
-./scripts/uninstall-local.sh /absolute/path/to/target-repo
-```
+Then run `/extract-business-rule` in any project.
 
 ## How it works
 

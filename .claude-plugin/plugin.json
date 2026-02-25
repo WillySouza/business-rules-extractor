@@ -5,6 +5,7 @@
   "author": {
     "name": "Will"
   },
+  "repository": "https://github.com/WillySouza/business-rules-extractor",
   "license": "MIT",
   "keywords": [
     "business-rules",
