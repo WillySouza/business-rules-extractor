@@ -1,38 +1,43 @@
 # business-rules-extractor
 
-Plugin for Cursor and Claude Code to extract feature-level business rules from source code using an evidence-first, stateful, multi-agent workflow.
+Claude Code plugin to extract feature-level business rules from source code using an evidence-first, stateful, multi-agent workflow.
 
 Designed for **broad features** (e.g. "Twilio Call Actions") that span multiple sub-features — each sub-feature gets its own focused document, extracted in a dedicated context window.
 
 ## Install
 
-From this plugin folder:
+### Option A — Plugin (recommended)
+
+Register this repo as a Claude Code plugin. No install script needed.
+
+1. Clone this repo somewhere on your machine.
+2. Add the plugin path to your Claude Code settings (project or global):
+   ```json
+   {
+     "plugins": ["/absolute/path/to/ricochet-dev-hub"]
+   }
+   ```
+3. The `.claude-plugin/plugin.json` declares all components (commands, skills, agents, templates).
+4. Run `/extract-business-rule` in any project.
+
+### Option B — Install script (copies files into target repo)
 
 ```bash
 chmod +x scripts/install-local.sh scripts/uninstall-local.sh
 
-# Cursor (default)
+# Default output directory (<target-repo>/docs)
 ./scripts/install-local.sh /absolute/path/to/target-repo
 
-# Claude Code
-./scripts/install-local.sh /absolute/path/to/target-repo claude-code
-
-# Custom output directory (optional 3rd arg, default: <target-repo>/docs)
-./scripts/install-local.sh /absolute/path/to/target-repo cursor /absolute/path/to/output-root
-./scripts/install-local.sh /absolute/path/to/target-repo claude-code /absolute/path/to/output-root
+# Custom output directory
+./scripts/install-local.sh /absolute/path/to/target-repo /absolute/path/to/output-root
 ```
 
-Then:
-
-1. Open target repo in Cursor (or Claude Code).
-2. Reload window (`Developer: Reload Window`) if using Cursor.
-3. Run `/extract-business-rule`.
+Then run `/extract-business-rule` in Claude Code.
 
 To remove:
 
 ```bash
 ./scripts/uninstall-local.sh /absolute/path/to/target-repo
-./scripts/uninstall-local.sh /absolute/path/to/target-repo claude-code
 ```
 
 ## How it works
@@ -46,7 +51,7 @@ Run 1  →  Setup (questions) + Exploration + Plan review
 Run 2  →  [STATUS] → document 1/N extracted → [STATUS]
 Run 3  →  [STATUS] → document 2/N extracted → [STATUS]
 ...
-Run N+1 → [STATUS FINAL ✅]
+Run N+1 → [STATUS FINAL]
 ```
 
 ### What you'll be asked (Run 1 only)
@@ -66,11 +71,11 @@ Every run opens and closes with a status panel:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 Extraction: Twilio Call Actions
+ Extraction: Twilio Call Actions
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  ✓ initiate-call.md
-  ✓ hold-call.md
-  → mute-call.md  (3/6)
+  completed  initiate-call.md
+  completed  hold-call.md
+  current    mute-call.md  (3/6)
     transfer-call.md
     hangup-call.md
     record-call.md
@@ -85,7 +90,7 @@ Every run opens and closes with a status panel:
 | State | `<output-root>/<repo-slug>/business-rules/extractions/<feature-slug>/state.json` |
 | Plan | `<output-root>/<repo-slug>/business-rules/extractions/<feature-slug>/PLAN.md` |
 
-`<output-root>` defaults to `<target-repo>/docs`. Override via the install script's 3rd argument.
+`<output-root>` defaults to `<target-repo>/docs`. Override via the install script's 2nd argument.
 `<repo-slug>` is derived at runtime from `basename(target-repo)`.
 
 ## What it includes
@@ -99,8 +104,7 @@ Every run opens and closes with a status panel:
   - `draft-business-rules-doc` — evidence-to-document synthesis
   - `validate-business-rules-evidence` — quality gate
   - `compare-business-rules-across-repos` — multi-repo comparison
-- **Agent:** `business-rules-reviewer` — isolated validation sub-agent
-- **Rule:** `business-rules-evidence-quality`
+- **Agent:** `business-rules-reviewer` — isolated validation sub-agent with source fact-checking
 - **Templates:** `base-business-rules.md`, `extraction-plan-template.md`
 - **Docs:** `AGENTS.md` — agent topology and delegation rules
 

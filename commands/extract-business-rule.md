@@ -12,12 +12,22 @@ You are an AI assistant specialized in extracting feature-level business rules f
 <critical>THE FINAL DOCUMENT MUST BE WRITTEN IN ENGLISH UNLESS EXPLICITLY REQUESTED OTHERWISE</critical>
 <critical>DO NOT FINISH WITH A FREEFORM SUMMARY: completion requires writing the markdown document from template and updating state.json</critical>
 <critical>SEARCH ONLY INSIDE target-repo: never scan parent directories or unrelated workspace folders</critical>
-<critical>ALL SOURCE REFERENCES IN DOCUMENTS MUST USE ABSOLUTE PATHS from target-repo root — e.g. `/Users/.../ricochet-api/src/App/Foo.php#L10-L15`, not `src/App/Foo.php#L10-L15`. The output docs live outside the target repo, so relative paths will not resolve.</critical>
+<critical>ALL SOURCE REFERENCES IN DOCUMENTS MUST USE THIS EXACT FORMAT:
+`> **Source:** [Filename.php:10-15](/absolute/path/to/repo/src/App/Filename.php#L10-L15)`
+- Display text: filename + line range only (e.g. `CallKillAction.php:38-42`)
+- Link: full absolute path from filesystem root (e.g. `/Users/will/Documents/Code/ricochet-api/src/...`), never relative
+- Line anchor: `#L38-L42` for ranges, `#L38` for single lines
+- Placement: as a blockquote **after** the closing ``` of the code block — never as a `//` comment inside it
+- For evidence with no code block: `> **Source:** [Filename.php:line](absolute-path#Lline)` replaces the inline backtick path
+- Path construction algorithm: `target_repo` + `/` + relative path within repo (e.g. `/Users/will/Code/ricochet-api` + `/src/Actions/CallKillAction.php` = `/Users/will/Code/ricochet-api/src/Actions/CallKillAction.php`)
+- NEVER use `./` or omit the leading `/` — always construct from `target_repo`</critical>
 
 ## State File
 
 The `<output-root>` placeholder below is replaced at install time with the configured
 output directory. Default: `<target-repo>/docs`.
+
+When running as a Claude Code plugin, the output root is set at install time or defaults to `<target-repo>/docs`.
 
 At runtime, derive `<repo-slug>` as `basename(target-repo)`.
 All artifact paths include `<repo-slug>` so that one install can serve multiple target repos.
@@ -109,7 +119,12 @@ Proceed immediately to **Phase 1** in the same run.
 
 ## Phase 1 — Exploration
 
-Run `explore-feature-boundaries` with target repo and feature scope.
+Use the Task tool to run `explore-feature-boundaries` as a subagent for a cleaner context:
+```
+Task tool with subagent_type="Explore"
+Prompt: explore the feature boundaries for "<feature scope>" in <target_repo>.
+Include the full explore-feature-boundaries skill instructions in the prompt.
+```
 
 The skill returns a taxonomy: list of sub-features, each with slug, description, entrypoints, and key files.
 
@@ -168,7 +183,21 @@ Run `extract-business-rules` with:
 - output path: `<output-root>/<repo-slug>/business-rules/<feature-slug>/<doc-slug>.md`
 - `extraction_options` from state.json
 
-On **success**:
+The `extract-business-rules` skill will:
+- Map evidence, draft the document, and delegate validation to `@business-rules-reviewer`.
+- The skill uses the Task tool to spawn the reviewer as `subagent_type="general-purpose"` with the `target_repo` for source fact-checking.
+
+### Source Reference Audit
+
+After the skill returns a passing document, perform a final source reference audit before writing to disk:
+
+1. Parse all `> **Source:**` references from the document.
+2. For each reference, read the file at the specified line range.
+3. Verify the code at those lines supports the claim in the document.
+4. Auto-fix any relative paths by prepending `target_repo`.
+5. If >30% of references fail, return the document to the extraction skill for remediation.
+
+On **success** (audit passes):
 - Write the returned markdown to the output path.
 - Move doc from `pending[0]` to `completed` in state.json.
 - If `pending` is now empty: set `phase: "done"`.

@@ -1,7 +1,10 @@
 {
   "name": "business-rules-extractor",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Extract feature-level business rules from code with depth, state persistence, and document-per-sub-feature splitting.",
+  "author": {
+    "name": "Will"
+  },
   "license": "MIT",
   "keywords": [
     "business-rules",
@@ -9,12 +12,5 @@
     "feature-mapping",
     "evidence-based",
     "multi-agent"
-  ],
-  "components": {
-    "commands": "commands",
-    "skills": "skills",
-    "rules": "rules",
-    "agents": "agents",
-    "templates": "templates"
-  }
+  ]
 }

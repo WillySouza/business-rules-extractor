@@ -46,7 +46,8 @@ Carrier lifecycle rule:
 
 Each item must include:
 
-- `path`
+- `path` — **absolute filesystem path** (must start with the `target_repo` prefix, e.g. `/Users/will/Code/my-app/src/Actions/DoThing.php`). Never use relative paths.
+- `line_range` — exact start and end line numbers verified by reading the file (e.g. `38-42`). Do not estimate line numbers — open the file and confirm.
 - symbol/context anchor
 - short reason the evidence supports a rule
 - repository label
