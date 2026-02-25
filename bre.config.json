@@ -1,0 +1,35 @@
+{
+  "default_mode": "balanced",
+  "modes": {
+    "max-quality": {
+      "description": "Best models across all phases. Highest accuracy, higher cost.",
+      "models": {
+        "explore":  "sonnet",
+        "plan":     "sonnet",
+        "map":      "opus",
+        "draft":    "opus",
+        "reviewer": "opus"
+      }
+    },
+    "balanced": {
+      "description": "Fast models for structural phases, Sonnet for synthesis and validation.",
+      "models": {
+        "explore":  "haiku",
+        "plan":     "haiku",
+        "map":      "sonnet",
+        "draft":    "sonnet",
+        "reviewer": "sonnet"
+      }
+    },
+    "budget": {
+      "description": "Haiku everywhere except draft, which requires minimum Sonnet quality for synthesis.",
+      "models": {
+        "explore":  "haiku",
+        "plan":     "haiku",
+        "map":      "haiku",
+        "draft":    "sonnet",
+        "reviewer": "haiku"
+      }
+    }
+  }
+}

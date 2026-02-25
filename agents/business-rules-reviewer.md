@@ -49,3 +49,20 @@ Any of the following is an automatic `fail`:
 - A source path is relative (does not start with `/`).
 - A required section is missing or sections are out of order.
 - A Rule Details entry is missing required fields.
+
+## Phase Block
+
+Open your output with:
+
+```
+━━━ [REVIEW] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Sub-feature: <sub-feature scope>
+  Spot-checking <N> source references...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+Close your output with:
+
+```
+━━━ [REVIEW] Verdict: <PASS | FAIL> ━━━━━━━━━━━━━━
+```

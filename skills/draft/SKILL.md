@@ -1,5 +1,5 @@
 ---
-name: draft-business-rules-doc
+name: draft
 description: Draft a business rules markdown document from mapped evidence using the base template.
 ---
 
@@ -211,3 +211,13 @@ If mode is `multi_repo_compare`, output structure must include:
 - New API-only Rules
 - Behavior Drift / Gaps
 - Migration Risks
+
+## Phase Block
+
+Open your output with:
+
+```
+━━━ [DRAFT] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Sub-feature: <sub-feature scope>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```

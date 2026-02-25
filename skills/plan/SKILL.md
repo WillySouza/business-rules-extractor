@@ -1,5 +1,5 @@
 ---
-name: generate-extraction-plan
+name: plan
 description: Generate a PLAN.md from a feature taxonomy, proposing document groupings for user review before extraction begins.
 ---
 
@@ -13,7 +13,7 @@ Convert a feature taxonomy into a `PLAN.md` that the user can review before any 
 
 - Feature name
 - Target repository path
-- Taxonomy from `explore-feature-boundaries`
+- Taxonomy from `explore`
 - Extraction options (which sections to include)
 
 ## Output: PLAN.md
@@ -60,3 +60,14 @@ Use the following format:
 - Do not generate more than 10 rows. If taxonomy has more, group the least distinct sub-features.
 - Flag any grouping that required a judgment call in the Grouping Notes section.
 - Extraction options checkboxes must reflect the choices collected in Phase 0.
+
+## Phase Block
+
+Open your output with:
+
+```
+━━━ [PLAN] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Feature: <feature scope>
+  Proposed documents: <N>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```

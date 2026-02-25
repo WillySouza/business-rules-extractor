@@ -1,5 +1,5 @@
 ---
-name: explore-feature-boundaries
+name: explore
 description: Lightweight taxonomy scan of a broad feature to identify natural sub-features and their associated entrypoints.
 ---
 
@@ -56,3 +56,14 @@ Sub-feature 2
 ```
 
 Flag any sub-feature where grouping decision was non-obvious with a `[grouped: <reason>]` annotation.
+
+## Phase Block
+
+Open your output with:
+
+```
+━━━ [EXPLORE] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Feature: <feature scope>
+  Repo: <repo-slug>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```

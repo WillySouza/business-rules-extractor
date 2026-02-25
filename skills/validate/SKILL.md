@@ -1,5 +1,5 @@
 ---
-name: validate-business-rules-evidence
+name: validate
 description: Validate business rule drafts for evidence coverage, confidence tagging, and unresolved ambiguity.
 ---
 
@@ -70,3 +70,13 @@ Return:
 - pass/fail status
 - issue list (if any)
 - minimal remediation actions
+
+## Phase Block
+
+Open your output with:
+
+```
+━━━ [VALIDATE] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Sub-feature: <sub-feature scope>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```

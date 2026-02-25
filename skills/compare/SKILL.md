@@ -1,5 +1,5 @@
 ---
-name: compare-business-rules-across-repos
+name: compare
 description: Compare extracted business rules from multiple repositories and produce migration-oriented shared/delta outputs.
 ---
 
@@ -38,3 +38,14 @@ Return a comparison document with:
 - explicit per-repo attribution
 - shared vs delta breakdown
 - migration-focused risk summary
+
+## Phase Block
+
+Open your output with:
+
+```
+━━━ [COMPARE] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Feature: <feature scope>
+  Repos: <repo-a> ↔ <repo-b>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```

@@ -1,6 +1,6 @@
 {
-  "name": "business-rules-extractor",
-  "version": "0.3.0",
+  "name": "bre",
+  "version": "0.4.0",
   "description": "Extract feature-level business rules from code with depth, state persistence, and document-per-sub-feature splitting.",
   "author": {
     "name": "Will"

@@ -1,14 +1,14 @@
 {
-  "name": "business-rules",
+  "name": "bre",
   "owner": {
     "name": "Will"
   },
   "plugins": [
     {
-      "name": "business-rules-extractor",
+      "name": "bre",
       "source": "./",
       "description": "Extract feature-level business rules from code with depth, state persistence, and document-per-sub-feature splitting.",
-      "version": "0.3.0"
+      "version": "0.4.0"
     }
   ]
 }

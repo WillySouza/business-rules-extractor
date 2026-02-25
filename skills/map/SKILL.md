@@ -1,5 +1,5 @@
 ---
-name: map-business-rule-evidence
+name: map
 description: Deterministically map feature-relevant business rule evidence from source code.
 ---
 
@@ -80,3 +80,13 @@ Rules for scope boundaries:
 - Exclude `out_of_scope` evidence from primary rule candidates.
 - For `cross_domain` evidence, keep only reference metadata if `cross_domain_policy=reference_only`.
 - For `depth=full`, do not finalize evidence inventory if an in-scope entrypoint has no mapped downstream chain.
+
+## Phase Block
+
+Open your output with:
+
+```
+━━━ [MAP] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Sub-feature: <sub-feature scope>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
