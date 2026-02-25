@@ -11,7 +11,7 @@ Designed for **broad features** (e.g. "Twilio Call Actions") that span multiple 
 /plugin install bre@business-rules
 ```
 
-Then run `/execute` in any project. Run `bre:help` for a full reference guide.
+Then run `/bre:execute` in any project. Run `/bre:help` for a full reference guide.
 
 ## How it works
 
@@ -80,7 +80,7 @@ Configure in `bre.config.json` at the plugin root:
 
 ## What it includes
 
-- **Command:** `/execute`
+- **Commands:** `/bre:execute`, `/bre:help`
 - **Skills:**
   - `setup` — collects inputs and writes initial state.json
   - `explore` — lightweight taxonomy scan
@@ -90,7 +90,6 @@ Configure in `bre.config.json` at the plugin root:
   - `draft` — evidence-to-document synthesis
   - `validate` — inline quality gate
   - `compare` — multi-repo comparison
-  - `help` — reference guide (`bre:help`)
 - **Agent:** `business-rules-reviewer` — isolated validation sub-agent with source fact-checking
 - **Config:** `bre.config.json` — model mode configuration
 - **Templates:** `base-business-rules.md`, `extraction-plan-template.md`
@@ -101,7 +100,7 @@ Configure in `bre.config.json` at the plugin root:
 Use when a feature spans two repositories (e.g. migration analysis).
 
 ```
-/execute → select multi_repo_compare mode
+/bre:execute → select multi_repo_compare mode
 ```
 
 Output includes: shared rules, repo-specific rules, behavior drift/gaps, migration risks.

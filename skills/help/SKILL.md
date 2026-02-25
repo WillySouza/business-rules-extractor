@@ -32,7 +32,7 @@ Every rule must be backed by code evidence. Ambiguities become explicit open que
 ## How to run
 
 ```
-/execute
+/bre:execute
 ```
 
 That's it. On first run you'll be asked for target repo, feature scope, and detail level.
@@ -116,7 +116,7 @@ or deleting `state.json` to restart the extraction.
 ## Agent topology
 
 ```
-/execute (command — orchestrator)
+/bre:execute (command — orchestrator)
 │
 ├── setup       (skill — inputs + state.json)
 ├── explore     (skill — taxonomy scan, subagent: Explore)
@@ -132,7 +132,7 @@ or deleting `state.json` to restart the extraction.
 ## Multi-repo compare
 
 ```
-/execute → select multi_repo_compare mode
+/bre:execute → select multi_repo_compare mode
 ```
 
 Runs Phases 0–3 per repo, then runs `compare` to produce:
@@ -142,6 +142,6 @@ shared rules, repo-specific rules, behavior drift/gaps, migration risks.
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- Run /execute to start. Run bre:help anytime.
+ Run /bre:execute to start. Run /bre:help anytime.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

@@ -1,5 +1,4 @@
 ---
-name: execute
 description: Extract feature-level business rules with depth, state persistence, and one document per run.
 ---
 
