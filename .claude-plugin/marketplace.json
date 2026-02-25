@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "business-rules-extractor",
-      "source": ".",
+      "source": "./",
       "description": "Extract feature-level business rules from code with depth, state persistence, and document-per-sub-feature splitting.",
       "version": "0.3.0"
     }
