@@ -48,9 +48,9 @@ Run a strict quality gate on a drafted business-rules markdown document.
 
 ### Source Reference Format
 
-- All `> **Source:**` references use absolute paths (path component starts with `/`).
+- All `> **Source:**` references use the `vscode://file//` scheme (never plain absolute paths or `#L` anchors).
 - Display text uses `Filename.ext:N-M` format (filename + line range).
-- Link target uses `#LN-LM` anchor format for line ranges or `#LN` for single lines.
+- Link target uses `vscode://file//absolute/path:N` format — start line only, no `-M` suffix in the URL.
 - Source references are placed as blockquotes after code blocks, not as inline comments.
 
 ## Failure Handling

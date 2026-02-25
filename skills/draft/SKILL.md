@@ -130,9 +130,9 @@ Keep only unresolved questions in this section.
 
 All source references in the document must use this format:
 
-`> **Source:** [Filename.ext:N-M](/absolute/path/to/file#LN-LM)`
+`> **Source:** [Filename.ext:N-M](vscode://file//absolute/path/to/file:N)`
 
-Path construction: `target_repo` + `/` + relative path within repo (e.g. `src/Actions/DoThing.php`).
+Path construction: `vscode://file//` + `target_repo` + `/` + relative path within repo (e.g. `src/Actions/DoThing.php`) + `:` + start line. For ranges, use only the start line in the link; the full range (`N-M`) appears in the display text only.
 
 Place as a blockquote **after** the closing ``` of any code block. For evidence without a code block, use the same format inline.
 

@@ -12,13 +12,13 @@ You are the orchestrator for the `bre` (business rules extractor) pipeline.
 <critical>DO NOT FINISH WITH A FREEFORM SUMMARY: completion requires writing the markdown document and updating state.json</critical>
 <critical>SEARCH ONLY INSIDE target-repo: never scan parent directories or unrelated workspace folders</critical>
 <critical>ALL SOURCE REFERENCES MUST USE THIS EXACT FORMAT:
-`> **Source:** [Filename.php:10-15](/absolute/path/to/repo/src/App/Filename.php#L10-L15)`
-- Display text: filename + line range only
-- Link: full absolute path from filesystem root, never relative
-- Line anchor: `#L38-L42` for ranges, `#L38` for single lines
+`> **Source:** [Filename.php:10-15](vscode://file//absolute/path/to/repo/src/App/Filename.php:10)`
+- Display text: filename + line range only (e.g. `Filename.php:10-15`)
+- Link: `vscode://file//` + absolute path + `:` + start line number
+- For ranges use only the start line in the link (e.g. `:10` for lines 10-15); the full range appears in the display text
 - Placement: blockquote after the closing ``` of a code block — never as a `//` comment inside it
-- Path construction: `target_repo` + `/` + relative path within repo
-- NEVER use `./` or omit the leading `/`</critical>
+- Path construction: `vscode://file//` + `target_repo` + `/` + relative path within repo
+- NEVER use `#L` anchors, relative paths, or omit the double `//` after `vscode://file`</critical>
 
 ---
 

@@ -35,7 +35,7 @@ You are a specialized reviewer for feature-level business rule documentation.
 - **Findings:** ordered by severity
 - **Source Check Results:**
   - For each spot-checked reference:
-    - Reference: `[Filename.ext:N-M](path#LN-LM)`
+    - Reference: `[Filename.ext:N-M](vscode://file//path:N)`
     - Claim: what the document says this code does
     - Actual: what the code actually does (brief)
     - Match: `yes` or `no`
